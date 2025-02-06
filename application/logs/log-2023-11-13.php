@@ -1,0 +1,12 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2023-11-13 08:24:52 --> 404 Page Not Found: Admin/prosesUpdateFaktur
+ERROR - 2023-11-13 08:25:23 --> 404 Page Not Found: Admin/prosesUpdateFaktur
+ERROR - 2023-11-13 08:25:58 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:30:42 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:31:15 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:37:22 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:37:37 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:38:15 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 08:38:25 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 664
+ERROR - 2023-11-13 09:04:17 --> Severity: error --> Exception: Too few arguments to function Admin::prosesUpdateFaktur(), 0 passed in C:\xampp\htdocs\simba\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\simba\application\controllers\Admin.php 678

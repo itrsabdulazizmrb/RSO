@@ -1,0 +1,8 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2023-12-21 15:14:51 --> Query error: Column 'tanggal_jatuh_tempo' cannot be null - Invalid query: INSERT INTO `tbl_faktur` (`no_faktur`, `surat_pesanan`, `tanggal_jatuh_tempo`, `tanggal_faktur`, `nama_supplier`, `alamat_supplier`, `petugas_penerima`, `bukti_faktur`, `total_pembayaran`) VALUES ('1111111111111111', '900/111/RSUD/2021', NULL, '2023-12-21', 'PT. Jaya Jaya Jaya', 'Babylonia\r\nRT 003 RW 001', 'Hijra', NULL, '1000000')
+ERROR - 2023-12-21 15:15:35 --> Query error: Column 'tanggal_jatuh_tempo' cannot be null - Invalid query: INSERT INTO `tbl_faktur` (`no_faktur`, `surat_pesanan`, `tanggal_jatuh_tempo`, `tanggal_faktur`, `nama_supplier`, `alamat_supplier`, `petugas_penerima`, `bukti_faktur`, `total_pembayaran`) VALUES ('1111111111111111', '900/111/RSUD/2021', NULL, '2023-12-21', 'PT. Jaya Jaya Jaya', 'Babylonia\r\nRT 003 RW 001', 'Hijra', 'Barang_E-RM_Ranap.pdf', '1000000')
+ERROR - 2023-12-21 16:12:36 --> 404 Page Not Found: 
+ERROR - 2023-12-21 16:13:51 --> 404 Page Not Found: 
+ERROR - 2023-12-21 16:14:23 --> 404 Page Not Found: 
+ERROR - 2023-12-21 16:31:42 --> Query error: Duplicate entry '0869784125554777' for key 'PRIMARY' - Invalid query: INSERT INTO `tbl_faktur` (`no_faktur`, `surat_pesanan`, `tanggal_jatuh_tempo`, `tanggal_faktur`, `nama_supplier`, `alamat_supplier`, `petugas_penerima`, `bukti_faktur`, `total_pembayaran`, `status`) VALUES ('0869784125554777', '6.47/SP-BLUD/VI/2023', '2023-12-29', '2023-12-20', 'PT. KFC', 'Babylonia\r\nRT 003 RW 001', 'Hijra', NULL, '4449712', 'Belum')
