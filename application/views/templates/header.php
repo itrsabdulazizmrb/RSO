@@ -30,9 +30,6 @@
 <!-- Bootstrap Datepicker CSS -->
 <link href="<?php echo base_url('assets/libraries/bootstrap-datepicker/css/bootstrap-datepicker.min.css'); ?>" rel="stylesheet">
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

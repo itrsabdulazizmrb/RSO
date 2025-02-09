@@ -18,11 +18,29 @@
             $tahun_ini = date('Y');
             ?>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">RL 4.1 - Morbiditas Pasien Rawat Inap <?= $bulan_ini . ' ' . $tahun_ini; ?></h1>
-                <a href="<?= base_url('report'); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
+                <h1 class="h3 mb-0 text-gray-800">RL 3.8 - Morbiditas Pasien Rawat Inap <?= $bulan_ini . ' ' . $tahun_ini; ?></h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
                     <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                 </a>
             </div>
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <div class="card shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Tindakan  <?= $bulan_ini . ' ' . $tahun_ini; ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($total_tindakan) ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Rata-rata Tindakan per Hari  <?= $bulan_ini . ' ' . $tahun_ini; ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($rata_rata, 2) ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <!-- Content Row -->
             <div class="row">
@@ -47,107 +65,32 @@
                         <!-- Card Body -->
                         <div class="card-body">
                         <div class="table-responsive">
-    <table class="table table-bordered text-center align-middle" id="tabelantrol" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th rowspan="2">Kode Penyakit</th>
-                <th rowspan="2">Nama Penyakit</th>
-                <th colspan="2">< 1 Jam</th>
-                <th colspan="2">1 - 23 Jam</th>
-                <th colspan="2">1 - 7 Hari</th>
-                <th colspan="2">8 - 28 Hari</th>
-                <th colspan="2">29 Hari - < 3 Bulan</th>
-                <th colspan="2">3 - < 6 Bulan</th>
-                <th colspan="2">6 - 11 Bulan</th>
-                <th colspan="2">1 - 4 Tahun</th>
-                <th colspan="2">5 - 9 Tahun</th>
-                <th colspan="2">10 - 14 Tahun</th>
-                <th colspan="2">15 - 19 Tahun</th>
-                <th colspan="2">20 - 24 Tahun</th>
-                <th colspan="2">25 - 29 Tahun</th>
-                <th colspan="2">30 - 34 Tahun</th>
-                <th colspan="2">35 - 39 Tahun</th>
-                <th colspan="2">40 - 44 Tahun</th>
-                <th colspan="2">45 - 49 Tahun</th>
-                <th colspan="2">50 - 54 Tahun</th>
-                <th colspan="2">55 - 59 Tahun</th>
-                <th colspan="2">60 - 64 Tahun</th>
-                <th colspan="2">65 - 69 Tahun</th>
-                <th colspan="2">70 - 74 Tahun</th>
-                <th colspan="2">75 - 79 Tahun</th>
-                <th colspan="2">80 - 84 Tahun</th>
-                <th colspan="2">> 85 Tahun</th>
-                <th rowspan="2">Meninggal</th>
-            </tr>
-            <tr>
-                <?php for ($i = 0; $i < 25; $i++): ?>
-                    <th>Laki-Laki</th>
-                    <th>Perempuan</th>
-                <?php endfor; ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($RL38 as $row): ?>
-                <tr>
-                    <td><?= $row->kd_penyakit ?></td>
-                    <td><?= $row->nm_penyakit ?></td>
-                    <td><?= $row->jam_lt1_L ?></td>
-                    <td><?= $row->jam_lt1_P ?></td>
-                    <td><?= $row->jam_1_23_L ?></td>
-                    <td><?= $row->jam_1_23_P ?></td>
-                    <td><?= $row->hari_1_7_L ?></td>
-                    <td><?= $row->hari_1_7_P ?></td>
-                    <td><?= $row->hari_8_28_L ?></td>
-                    <td><?= $row->hari_8_28_P ?></td>
-                    <td><?= $row->bln_lt3_L ?></td>
-                    <td><?= $row->bln_lt3_P ?></td>
-                    <td><?= $row->bln_3_5_L ?></td>
-                    <td><?= $row->bln_3_5_P ?></td>
-                    <td><?= $row->bln_6_11_L ?></td>
-                    <td><?= $row->bln_6_11_P ?></td>
-                    <td><?= $row->th_1_4_L ?></td>
-                    <td><?= $row->th_1_4_P ?></td>
-                    <td><?= $row->th_5_9_L ?></td>
-                    <td><?= $row->th_5_9_P ?></td>
-                    <td><?= $row->th_10_14_L ?></td>
-                    <td><?= $row->th_10_14_P ?></td>
-                    <td><?= $row->th_15_19_L ?></td>
-                    <td><?= $row->th_15_19_P ?></td>
-                    <td><?= $row->th_20_24_L ?></td>
-                    <td><?= $row->th_20_24_P ?></td>
-                    <td><?= $row->th_25_29_L ?></td>
-                    <td><?= $row->th_25_29_P ?></td>
-                    <td><?= $row->th_30_34_L ?></td>
-                    <td><?= $row->th_30_34_P ?></td>
-                    <td><?= $row->th_35_39_L ?></td>
-                    <td><?= $row->th_35_39_P ?></td>
-                    <td><?= $row->th_40_44_L ?></td>
-                    <td><?= $row->th_40_44_P ?></td>
-                    <td><?= $row->th_45_49_L ?></td>
-                    <td><?= $row->th_45_49_P ?></td>
-                    <td><?= $row->th_50_54_L ?></td>
-                    <td><?= $row->th_50_54_P ?></td>
-                    <td><?= $row->th_55_59_L ?></td>
-                    <td><?= $row->th_55_59_P ?></td>
-                    <td><?= $row->th_60_64_L ?></td>
-                    <td><?= $row->th_60_64_P ?></td>
-                    <td><?= $row->th_65_69_L ?></td>
-                    <td><?= $row->th_65_69_P ?></td>
-                    <td><?= $row->th_70_74_L ?></td>
-                    <td><?= $row->th_70_74_P ?></td>
-                    <td><?= $row->th_75_79_L ?></td>
-                    <td><?= $row->th_75_79_P ?></td>
-                    <td><?= $row->th_80_84_L ?></td>
-                    <td><?= $row->th_80_84_P ?></td>
-                    <td><?= $row->th_85_L ?></td>
-                    <td><?= $row->th_85_P ?></td>
-                    <td><?= $row->mati ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-
+                        <table class="table table-bordered text-center align-middle" id="tabelantrol" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;" rowspan="2">No.</th>
+                                <th rowspan="2">Nama Pemeriksaan</th>
+                                <th colspan="2">Jumlah</th>
+                                <th rowspan="2">Total</th>
+                            </tr>
+                            <tr>
+                                <th>Laki-Laki</th>
+                                <th>Perempuan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; foreach ($RL38 as $row): ?>
+                                <tr>
+                                    <td><?= $no++; ?></td>
+                                    <td style="text-align:left"><?= $row->nama_tindakan; ?></td>
+                                    <td><?= $row->jumlah_L; ?></td>
+                                    <td><?= $row->jumlah_P; ?></td>
+                                    <td><?= $row->jumlah_L + $row->jumlah_P; ?></td> 
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    </div>
                     </div>
                 </div>
             </div>

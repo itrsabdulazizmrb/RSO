@@ -119,8 +119,11 @@
                                 RL &nbsp<i class="fa fa-caret-down" aria-hidden="true"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<?= base_url('data/rl35') ?>">RL 3.5 Kunjungan</a>
                                 <a class="dropdown-item" href="<?= base_url('data/rl38') ?>">RL 3.8 Laboratorium</a>
+                                <a class="dropdown-item" href="<?= base_url('data/rl310') ?>">RL 3.10 Rujukan</a>
                                 <a class="dropdown-item" href="<?= base_url('data/rl41') ?>">RL 4.1 Morbiditas Pasien Rawat Inap</a>
+                                <a class="dropdown-item" href="<?= base_url('data/rl41ralan') ?>">RL 4.1 Morbiditas Pasien Rawat Jalan</a>
                             </div>
                         </li>
 
