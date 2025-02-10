@@ -1,24 +1,50 @@
-<!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
-<!-- Main Content -->
+
+    <!-- Main Content -->
     <div id="content">
+
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
             <?php
             $bulan = array(
                 1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
             );
-            $bulan_ini = $bulan[date('n')];
-            $tahun_ini = date('Y');
+            $bulan_ini = isset($_GET['bulan']) ? $bulan[$_GET['bulan']] : $bulan[date('n')];
+            $tahun_ini = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
             ?>
-            
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">RL 4.1 - Morbiditas Pasien Rawat Jalan <?= $bulan_ini . ' ' . $tahun_ini; ?></h1>
-                <a href="<?= base_url('report'); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
+                <h1 class="h3 mb-0 text-gray-800">RL 4.1 - Morbiditas Pasien Rawat Inap <span id="bulan-tahun"><?= $bulan_ini . ' ' . $tahun_ini; ?></span></h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
                     <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                 </a>
             </div>
+            <form id="filterForm" class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <select name="bulan" id="bulan" class="form-control">
+                        <?php foreach ($bulan as $key => $value) : ?>
+                            <option value="<?= $key; ?>" <?= isset($_GET['bulan']) && $_GET['bulan'] == $key ? 'selected' : ''; ?>><?= $value; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="tahun" id="tahun" class="form-control">
+                        <?php 
+                        $tahun_sekarang = date('Y');
+                        for ($i = $tahun_sekarang; $i >= $tahun_sekarang - 5; $i--) {
+                            echo "<option value='$i'" . (isset($_GET['tahun']) && $_GET['tahun'] == $i ? ' selected' : '') . ">$i</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form> 
+
 
             <!-- Content Row -->
             <div class="row">
@@ -156,6 +182,29 @@
     </div>
 
     <script>
+        
+    $(document).ready(function() {
+        initializeDataTable();
+
+        $('#filterForm').submit(function(event) {
+            event.preventDefault();
+            let bulan = $('#bulan').val();
+            let tahun = $('#tahun').val();
+            
+            $.ajax({
+                url: "<?= htmlspecialchars(base_url('data/RL35'), ENT_QUOTES, 'UTF-8'); ?>",
+                type: "GET",
+                data: { bulan: bulan, tahun: tahun },
+                success: function(response) {
+                    var newRows = $(response).find('#tabelantrol tbody').html();
+                    $('#tabelantrol tbody').html(newRows);
+                    var bulanText = $('#bulan option:selected').text();
+                    $('#bulan-tahun').text(bulanText + ' ' + tahun);
+                }
+            });
+        });
+    });
+    
         $(document).ready(function() {
             $('#tabelantrol').DataTable({
                 "pageLength": 50,

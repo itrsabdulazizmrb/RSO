@@ -112,7 +112,7 @@ class Data_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-    public function getRL35()
+    public function getRL35($bulan, $tahun)
     {
         $query = "
             SELECT 
@@ -121,8 +121,8 @@ class Data_model extends CI_Model
                 SELECT 1 FROM reg_periksa r2
                 WHERE r2.no_rkm_medis = rp.no_rkm_medis 
                 AND r2.kd_poli = rp.kd_poli
-                AND MONTH(r2.tgl_registrasi) = MONTH(CURDATE()) 
-                AND YEAR(r2.tgl_registrasi) = YEAR(CURDATE()) 
+                AND MONTH(r2.tgl_registrasi) = ?
+                AND YEAR(r2.tgl_registrasi) = ?
                 AND r2.tgl_registrasi < rp.tgl_registrasi
             ) THEN 1 ELSE 0 END) AS jk_L_baru,
 
@@ -130,8 +130,8 @@ class Data_model extends CI_Model
                 SELECT 1 FROM reg_periksa r2
                 WHERE r2.no_rkm_medis = rp.no_rkm_medis 
                 AND r2.kd_poli = rp.kd_poli
-                AND MONTH(r2.tgl_registrasi) = MONTH(CURDATE()) 
-                AND YEAR(r2.tgl_registrasi) = YEAR(CURDATE()) 
+                AND MONTH(r2.tgl_registrasi) = ?
+                AND YEAR(r2.tgl_registrasi) = ?
                 AND r2.tgl_registrasi < rp.tgl_registrasi
             ) THEN 1 ELSE 0 END) AS jk_P_baru,
 
@@ -139,8 +139,8 @@ class Data_model extends CI_Model
                 SELECT 1 FROM reg_periksa r2
                 WHERE r2.no_rkm_medis = rp.no_rkm_medis 
                 AND r2.kd_poli = rp.kd_poli
-                AND MONTH(r2.tgl_registrasi) = MONTH(CURDATE()) 
-                AND YEAR(r2.tgl_registrasi) = YEAR(CURDATE()) 
+                AND MONTH(r2.tgl_registrasi) = ?
+                AND YEAR(r2.tgl_registrasi) = ?
                 AND r2.tgl_registrasi < rp.tgl_registrasi
             ) THEN 1 ELSE 0 END) AS jk_L_lama,
 
@@ -148,39 +148,47 @@ class Data_model extends CI_Model
                 SELECT 1 FROM reg_periksa r2
                 WHERE r2.no_rkm_medis = rp.no_rkm_medis 
                 AND r2.kd_poli = rp.kd_poli
-                AND MONTH(r2.tgl_registrasi) = MONTH(CURDATE()) 
-                AND YEAR(r2.tgl_registrasi) = YEAR(CURDATE()) 
+                AND MONTH(r2.tgl_registrasi) = ?
+                AND YEAR(r2.tgl_registrasi) = ?
                 AND r2.tgl_registrasi < rp.tgl_registrasi
             ) THEN 1 ELSE 0 END) AS jk_P_lama
 
         FROM reg_periksa rp
         JOIN poliklinik p ON rp.kd_poli = p.kd_poli
         JOIN pasien ON rp.no_rkm_medis = pasien.no_rkm_medis
-        WHERE MONTH(rp.tgl_registrasi) = MONTH(CURDATE()) 
-        AND YEAR(rp.tgl_registrasi) = YEAR(CURDATE())
+        WHERE MONTH(rp.tgl_registrasi) = ? 
+        AND YEAR(rp.tgl_registrasi) = ?
         GROUP BY p.nm_poli
         ORDER BY p.nm_poli;
         ";
-        return $this->db->query($query)->result();
+
+        return $this->db->query($query, [
+            $bulan, $tahun, 
+            $bulan, $tahun, 
+            $bulan, $tahun, 
+            $bulan, $tahun,
+            $bulan, $tahun
+        ])->result();
     }
 
-    public function getRL310()
+
+    public function getRL310($bulan, $tahun)
     {
         $query = "
-        SELECT 
-            bs.nmpolitujuan AS Nama_Poli,
-            COUNT(*) AS Total_Rujukan,
-            bs.nmppkrujukan AS Asal_Rujukan
-        FROM bridging_sep bs
-        WHERE MONTH(bs.tglrujukan) = MONTH(CURDATE())
-        AND YEAR(bs.tglrujukan) = YEAR(CURDATE())
-        GROUP BY bs.nmpolitujuan, bs.nmppkrujukan
-        ORDER BY bs.nmpolitujuan, Total_Rujukan DESC;
+            SELECT 
+                bs.nmpolitujuan AS Nama_Poli,
+                COUNT(*) AS Total_Rujukan,
+                bs.nmppkrujukan AS Asal_Rujukan
+            FROM bridging_sep bs
+            WHERE MONTH(bs.tglrujukan) = ? 
+            AND YEAR(bs.tglrujukan) = ?
+            GROUP BY bs.nmpolitujuan, bs.nmppkrujukan
+            ORDER BY bs.nmpolitujuan, Total_Rujukan DESC;
         ";
-        return $this->db->query($query)->result();
+        return $this->db->query($query, [$bulan, $tahun])->result();
     }
 
-    public function getRL38()
+    public function getRL38($bulan, $tahun)
     {
         $query = "
             SELECT 
@@ -196,15 +204,14 @@ class Data_model extends CI_Model
                 ON pl.no_rawat = rp.no_rawat
             INNER JOIN pasien ps 
                 ON rp.no_rkm_medis = ps.no_rkm_medis
-            WHERE MONTH(pl.tgl_periksa) = MONTH(CURDATE())
-            AND YEAR(pl.tgl_periksa) = YEAR(CURDATE())
+            WHERE MONTH(pl.tgl_periksa) = ?
+            AND YEAR(pl.tgl_periksa) = ?
             GROUP BY jpl.kd_jenis_prw, jpl.nm_perawatan;
         ";
-    
-        return $this->db->query($query)->result();
+        return $this->db->query($query, [$bulan, $tahun])->result();
     }
     
-    public function getRL41()
+    public function getRL41($bulan, $tahun)
     {
         $query = "
             SELECT 
@@ -272,16 +279,17 @@ class Data_model extends CI_Model
                 JOIN reg_periksa rp ON rp.no_rawat = dp.no_rawat
                 JOIN pasien ps ON rp.no_rkm_medis = ps.no_rkm_medis
                 JOIN kamar_inap ki ON rp.no_rawat = ki.no_rawat
-                WHERE dp.status = 'Ranap'
+            WHERE MONTH(rp.tgl_registrasi) = ?
+            AND YEAR(rp.tgl_registrasi) = ?
                 AND YEAR(rp.tgl_registrasi) = YEAR(CURDATE())
                 AND LEFT(dp.kd_penyakit,1) NOT IN ('V', 'W', 'X', 'Y') -- Mengecualikan kode penyebab eksternal
                 GROUP BY dp.kd_penyakit
                 ORDER BY dp.kd_penyakit;
         ";
-        return $this->db->query($query)->result();
+        return $this->db->query($query, [$bulan, $tahun])->result();
     }
 
-    public function getRL41Ralan()
+    public function getRL41Ralan($bulan, $tahun)
     {
         $query = "
             SELECT 
@@ -353,7 +361,7 @@ class Data_model extends CI_Model
             ORDER BY dp.kd_penyakit;
 
              ";
-        return $this->db->query($query)->result();
+        return $this->db->query($query, [$bulan, $tahun])->result();
     }
 
     public function rajal_view_by_date($date1, $date2)

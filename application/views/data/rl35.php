@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -14,15 +12,39 @@
                 1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
             );
-            $bulan_ini = $bulan[date('n')];
-            $tahun_ini = date('Y');
+            $bulan_ini = isset($_GET['bulan']) ? $bulan[$_GET['bulan']] : $bulan[date('n')];
+            $tahun_ini = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
             ?>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">RL 3.8 - Morbiditas Pasien Rawat Inap <?= $bulan_ini . ' ' . $tahun_ini; ?></h1>
+                <h1 class="h3 mb-0 text-gray-800">RL 3.5 - Kunjungan <span id="bulan-tahun"><?= $bulan_ini . ' ' . $tahun_ini; ?></span></h1>
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
                     <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                 </a>
             </div>
+            <form id="filterForm" class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <select name="bulan" id="bulan" class="form-control">
+                        <?php foreach ($bulan as $key => $value) : ?>
+                            <option value="<?= $key; ?>" <?= isset($_GET['bulan']) && $_GET['bulan'] == $key ? 'selected' : ''; ?>><?= $value; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="tahun" id="tahun" class="form-control">
+                        <?php 
+                        $tahun_sekarang = date('Y');
+                        for ($i = $tahun_sekarang; $i >= $tahun_sekarang - 5; $i--) {
+                            echo "<option value='$i'" . (isset($_GET['tahun']) && $_GET['tahun'] == $i ? ' selected' : '') . ">$i</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
 
             <!-- Content Row -->
             <div class="row">
@@ -49,31 +71,25 @@
                         <div class="table-responsive">
                         <table class="table table-bordered text-center align-middle" id="tabelantrol" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th style="width: 5%;" rowspan="2">No.</th>
-                                <th rowspan="2">Nama Poli</th>
-                                <th colspan="4">Jumlah</th>
-                            </tr>
-                            <tr>
-                                <th>Laki-Laki Baru</th>
-                                <th>Perempuan Baru</th>
-                                <th>Laki-Laki Lama</th>
-                                <th>Perempuan Lama</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1; foreach ($RL35 as $row): ?>
-                                <tr>
-                                    <td style="width: 5%;"><?= $no++; ?></td>
-                                    <td style="text-align:left"><?= $row->nm_poli; ?></td>
-                                    <td><?= $row->jk_L_baru; ?></td>
-                                    <td><?= $row->jk_P_baru; ?></td>
-                                    <td><?= $row->jk_L_lama; ?></td>
-                                    <td><?= $row->jk_P_lama; ?></td>
-
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
+                    <tr>
+                        <th>Poliklinik</th>
+                        <th>Laki-laki Baru</th>
+                        <th>Perempuan Baru</th>
+                        <th>Laki-laki Lama</th>
+                        <th>Perempuan Lama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($RL35 as $data) : ?>
+                        <tr>
+                            <td><?= $data->nm_poli; ?></td>
+                            <td><?= $data->jk_L_baru; ?></td>
+                            <td><?= $data->jk_P_baru; ?></td>
+                            <td><?= $data->jk_L_lama; ?></td>
+                            <td><?= $data->jk_P_lama; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
                     </table>
                     </div>
                     </div>
@@ -91,6 +107,28 @@
 
 <script>
     $(document).ready(function() {
+        initializeDataTable();
+
+        $('#filterForm').submit(function(event) {
+            event.preventDefault();
+            let bulan = $('#bulan').val();
+            let tahun = $('#tahun').val();
+            
+            $.ajax({
+                url: "<?= htmlspecialchars(base_url('data/RL35'), ENT_QUOTES, 'UTF-8'); ?>",
+                type: "GET",
+                data: { bulan: bulan, tahun: tahun },
+                success: function(response) {
+                    var newRows = $(response).find('#tabelantrol tbody').html();
+                    $('#tabelantrol tbody').html(newRows);
+                    var bulanText = $('#bulan option:selected').text();
+                    $('#bulan-tahun').text(bulanText + ' ' + tahun);
+                }
+            });
+        });
+    });
+
+    function initializeDataTable() {
         $('#tabelantrol').DataTable({
             "pageLength": 50,
             "lengthMenu": [10, 25, 50, 100],
@@ -100,19 +138,30 @@
             "language": {
                 "search": "",
                 "searchPlaceholder": "Cari..."
-            },
-            "dom": '<"d-flex justify-content-between align-items-center"lfr>t<"d-flex justify-content-between align-items-center"ip>'
+            }
         });
-    });
+    }
 
-    window.onscroll = function() {
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func.apply(this, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    window.onscroll = debounce(function() {
         var scrollToTopBtn = document.getElementById("scrollToTopBtn");
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
             scrollToTopBtn.style.display = "block";
         } else {
             scrollToTopBtn.style.display = "none";
         }
-    };
+    }, 100);
 
     document.getElementById("scrollToTopBtn").addEventListener("click", function(e) {
         e.preventDefault(); 
@@ -181,6 +230,7 @@
         background-color: #444;
         color: white;
     }
+
     .card {
         border-radius: 0.5rem;
         overflow: hidden;
@@ -204,6 +254,7 @@
     .btn-close {
         box-shadow: none;
     }
+
     #scrollToTopBtn {
         position: fixed;
         bottom: 20px;
@@ -267,14 +318,17 @@
     }
 
     .dataTables_scrollBody {
-    overflow-x: auto !important; /* Aktifkan scroll horizontal */
-}
+        overflow-x: auto !important; /* Aktifkan scroll horizontal */
+    }
 
+    th, td {
+        min-width: 120px; /* Lebarkan kolom */
+        text-align: center; /* Rata tengah */
+    }
 
-th:nth-child(1), td:nth-child(1), 
-th:nth-child(2), td:nth-child(2) {
-    position: sticky;
-
-    font-weight: bold; /* Tebalkan teks */
-}
+    th:nth-child(1), td:nth-child(1), 
+    th:nth-child(2), td:nth-child(2) {
+        position: sticky;
+        font-weight: bold; /* Tebalkan teks */
+    }
 </style>
