@@ -5774,3 +5774,220 @@ INFO - 2025-02-10 08:29:20 --> File loaded: C:\xampp\htdocs\rso\application\view
 INFO - 2025-02-10 08:29:20 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
 INFO - 2025-02-10 08:29:20 --> Final output sent to browser
 DEBUG - 2025-02-10 08:29:20 --> Total execution time: 0.1966
+INFO - 2025-02-10 23:31:42 --> Config Class Initialized
+INFO - 2025-02-10 23:31:42 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:42 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:42 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:42 --> URI Class Initialized
+INFO - 2025-02-10 23:31:42 --> Router Class Initialized
+INFO - 2025-02-10 23:31:42 --> Output Class Initialized
+INFO - 2025-02-10 23:31:42 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:42 --> Input Class Initialized
+INFO - 2025-02-10 23:31:42 --> Language Class Initialized
+INFO - 2025-02-10 23:31:42 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:42 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:42 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:42 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:42 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:42 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:42 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:42 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:42 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:42 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:42 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:42 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:42 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:42 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:42 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:42 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl41ralan.php
+INFO - 2025-02-10 23:31:42 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:42 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:42 --> Total execution time: 0.1184
+INFO - 2025-02-10 23:31:50 --> Config Class Initialized
+INFO - 2025-02-10 23:31:50 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:50 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:50 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:50 --> URI Class Initialized
+INFO - 2025-02-10 23:31:50 --> Router Class Initialized
+INFO - 2025-02-10 23:31:50 --> Output Class Initialized
+INFO - 2025-02-10 23:31:50 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:50 --> Input Class Initialized
+INFO - 2025-02-10 23:31:50 --> Language Class Initialized
+INFO - 2025-02-10 23:31:50 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:50 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:50 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:50 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:50 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:50 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:50 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:50 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:50 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:50 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:50 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:50 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:50 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:50 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:50 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:50 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl41ralan.php
+INFO - 2025-02-10 23:31:50 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:50 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:50 --> Total execution time: 0.1141
+INFO - 2025-02-10 23:31:53 --> Config Class Initialized
+INFO - 2025-02-10 23:31:53 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:53 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:53 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:53 --> URI Class Initialized
+INFO - 2025-02-10 23:31:53 --> Router Class Initialized
+INFO - 2025-02-10 23:31:53 --> Output Class Initialized
+INFO - 2025-02-10 23:31:53 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:53 --> Input Class Initialized
+INFO - 2025-02-10 23:31:53 --> Language Class Initialized
+INFO - 2025-02-10 23:31:53 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:53 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:53 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:53 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:53 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:53 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:53 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:53 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:53 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:53 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:53 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:53 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:53 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:53 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:53 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:53 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl41.php
+INFO - 2025-02-10 23:31:53 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:53 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:53 --> Total execution time: 0.0662
+INFO - 2025-02-10 23:31:55 --> Config Class Initialized
+INFO - 2025-02-10 23:31:55 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:55 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:55 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:55 --> URI Class Initialized
+INFO - 2025-02-10 23:31:55 --> Router Class Initialized
+INFO - 2025-02-10 23:31:55 --> Output Class Initialized
+INFO - 2025-02-10 23:31:55 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:55 --> Input Class Initialized
+INFO - 2025-02-10 23:31:55 --> Language Class Initialized
+INFO - 2025-02-10 23:31:55 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:55 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:55 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:55 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:55 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:55 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:55 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:55 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:55 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:55 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:55 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:55 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:55 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:55 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:55 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl310.php
+INFO - 2025-02-10 23:31:55 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:55 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:55 --> Total execution time: 0.0770
+INFO - 2025-02-10 23:31:57 --> Config Class Initialized
+INFO - 2025-02-10 23:31:57 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:57 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:57 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:57 --> URI Class Initialized
+INFO - 2025-02-10 23:31:57 --> Router Class Initialized
+INFO - 2025-02-10 23:31:57 --> Output Class Initialized
+INFO - 2025-02-10 23:31:57 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:57 --> Input Class Initialized
+INFO - 2025-02-10 23:31:57 --> Language Class Initialized
+INFO - 2025-02-10 23:31:57 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:57 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:57 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:57 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:57 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:57 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:57 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:57 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:57 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:57 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:57 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:57 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:57 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:57 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:57 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:57 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl38.php
+INFO - 2025-02-10 23:31:57 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:57 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:57 --> Total execution time: 0.1378
+INFO - 2025-02-10 23:31:58 --> Config Class Initialized
+INFO - 2025-02-10 23:31:58 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:31:58 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:31:58 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:31:58 --> URI Class Initialized
+INFO - 2025-02-10 23:31:58 --> Router Class Initialized
+INFO - 2025-02-10 23:31:58 --> Output Class Initialized
+INFO - 2025-02-10 23:31:58 --> Security Class Initialized
+DEBUG - 2025-02-10 23:31:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:31:58 --> Input Class Initialized
+INFO - 2025-02-10 23:31:58 --> Language Class Initialized
+INFO - 2025-02-10 23:31:58 --> Loader Class Initialized
+INFO - 2025-02-10 23:31:58 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:31:58 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:31:58 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:31:58 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:31:58 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:31:58 --> Email Class Initialized
+DEBUG - 2025-02-10 23:31:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:31:58 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:31:58 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:31:58 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:31:58 --> Controller Class Initialized
+INFO - 2025-02-10 23:31:58 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:31:58 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:31:59 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:31:59 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:31:59 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl35.php
+INFO - 2025-02-10 23:31:59 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:31:59 --> Final output sent to browser
+DEBUG - 2025-02-10 23:31:59 --> Total execution time: 0.1827
+INFO - 2025-02-10 23:32:00 --> Config Class Initialized
+INFO - 2025-02-10 23:32:00 --> Hooks Class Initialized
+DEBUG - 2025-02-10 23:32:00 --> UTF-8 Support Enabled
+INFO - 2025-02-10 23:32:00 --> Utf8 Class Initialized
+INFO - 2025-02-10 23:32:00 --> URI Class Initialized
+INFO - 2025-02-10 23:32:00 --> Router Class Initialized
+INFO - 2025-02-10 23:32:00 --> Output Class Initialized
+INFO - 2025-02-10 23:32:00 --> Security Class Initialized
+DEBUG - 2025-02-10 23:32:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-02-10 23:32:00 --> Input Class Initialized
+INFO - 2025-02-10 23:32:00 --> Language Class Initialized
+INFO - 2025-02-10 23:32:00 --> Loader Class Initialized
+INFO - 2025-02-10 23:32:00 --> Helper loaded: url_helper
+INFO - 2025-02-10 23:32:00 --> Helper loaded: file_helper
+INFO - 2025-02-10 23:32:00 --> Helper loaded: security_helper
+INFO - 2025-02-10 23:32:00 --> Helper loaded: wpu_helper
+INFO - 2025-02-10 23:32:00 --> Database Driver Class Initialized
+INFO - 2025-02-10 23:32:00 --> Email Class Initialized
+DEBUG - 2025-02-10 23:32:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-02-10 23:32:00 --> Session: Class initialized using 'files' driver.
+INFO - 2025-02-10 23:32:00 --> Helper loaded: form_helper
+INFO - 2025-02-10 23:32:00 --> Form Validation Class Initialized
+INFO - 2025-02-10 23:32:00 --> Controller Class Initialized
+INFO - 2025-02-10 23:32:00 --> Model "Data_model" initialized
+DEBUG - 2025-02-10 23:32:00 --> Form_validation class already loaded. Second attempt ignored.
+INFO - 2025-02-10 23:32:00 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/header.php
+INFO - 2025-02-10 23:32:00 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/topbar.php
+INFO - 2025-02-10 23:32:00 --> File loaded: C:\xampp\htdocs\rso\application\views\data/rl310.php
+INFO - 2025-02-10 23:32:00 --> File loaded: C:\xampp\htdocs\rso\application\views\templates/footer.php
+INFO - 2025-02-10 23:32:00 --> Final output sent to browser
+DEBUG - 2025-02-10 23:32:00 --> Total execution time: 0.0600

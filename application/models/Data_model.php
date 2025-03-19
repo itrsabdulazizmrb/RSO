@@ -282,7 +282,6 @@ class Data_model extends CI_Model
             WHERE MONTH(rp.tgl_registrasi) = ?
             AND YEAR(rp.tgl_registrasi) = ?
                 AND YEAR(rp.tgl_registrasi) = YEAR(CURDATE())
-                AND LEFT(dp.kd_penyakit,1) NOT IN ('V', 'W', 'X', 'Y') -- Mengecualikan kode penyebab eksternal
                 GROUP BY dp.kd_penyakit
                 ORDER BY dp.kd_penyakit;
         ";
@@ -293,8 +292,8 @@ class Data_model extends CI_Model
     {
         $query = "
             SELECT 
-                dp.kd_penyakit,
-                SUBSTRING(p.nm_penyakit,1,80) AS nm_penyakit,
+                dp.diagawal,
+                SUBSTRING(dp.nmdiagnosaawal,1,80) AS nmdiagnosaawal,
                 SUM(CASE WHEN rp.sttsumur = 'Jam' AND rp.umurdaftar < 1 AND ps.jk = 'L' THEN 1 ELSE 0 END) AS jam_lt1_L,
                 SUM(CASE WHEN rp.sttsumur = 'Jam' AND rp.umurdaftar < 1 AND ps.jk = 'P' THEN 1 ELSE 0 END) AS jam_lt1_P,
                 SUM(CASE WHEN rp.sttsumur = 'Jam' AND rp.umurdaftar BETWEEN 1 AND 23 AND ps.jk = 'L' THEN 1 ELSE 0 END) AS jam_1_23_L,
@@ -348,17 +347,15 @@ class Data_model extends CI_Model
 
                 COUNT(pm.no_rkm_medis) AS mati
 
-            FROM diagnosa_pasien dp
-            JOIN penyakit p ON dp.kd_penyakit = p.kd_penyakit
+            FROM bridging_sep dp
             JOIN reg_periksa rp ON rp.no_rawat = dp.no_rawat
             JOIN pasien ps ON rp.no_rkm_medis = ps.no_rkm_medis
             LEFT JOIN pasien_mati pm ON pm.no_rkm_medis = ps.no_rkm_medis
-            WHERE dp.status = 'Ralan'
-            AND MONTH(rp.tgl_registrasi) = MONTH(CURDATE())
-            AND YEAR(rp.tgl_registrasi) = YEAR(CURDATE())
-            AND LEFT(dp.kd_penyakit,1) NOT IN ('V', 'W', 'X', 'Y')
-            GROUP BY dp.kd_penyakit
-            ORDER BY dp.kd_penyakit;
+            WHERE NOT dp.kdpolitujuan = ''
+            AND MONTH(rp.tgl_registrasi) = ?
+            AND YEAR(rp.tgl_registrasi) = ?
+            GROUP BY dp.diagawal
+            ORDER BY dp.diagawal;
 
              ";
         return $this->db->query($query, [$bulan, $tahun])->result();
