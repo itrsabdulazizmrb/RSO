@@ -287,7 +287,7 @@ class Data_model extends CI_Model
         ";
         return $this->db->query($query, [$bulan, $tahun])->result();
     }
-
+// RL5.1
     public function getRL41Ralan($bulan, $tahun)
     {
         $query = "
