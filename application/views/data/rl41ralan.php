@@ -15,7 +15,7 @@
             $tahun_ini = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
             ?>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">RL 4.1 - Morbiditas Pasien Rawat Inap <span id="bulan-tahun"><?= $bulan_ini . ' ' . $tahun_ini; ?></span></h1>
+                <h1 class="h3 mb-0 text-gray-800">RL 5.1 - Morbiditas Pasien Rawat Inap <span id="bulan-tahun"><?= $bulan_ini . ' ' . $tahun_ini; ?></span></h1>
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm btn-generate-report">
                     <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
                 </a>
@@ -111,8 +111,8 @@
                             <tbody>
                                 <?php foreach ($RL41 as $row): ?>
                                     <tr>
-                                        <td ><?= $row->kd_penyakit ?></td>
-                                        <td><?= $row->nm_penyakit ?></td>
+                                        <td ><?= $row->diagawal ?></td>
+                                        <td><?= $row->nmdiagnosaawal ?></td>
                                         <td><?= $row->jam_lt1_L ?></td>
                                         <td><?= $row->jam_lt1_P ?></td>
                                         <td><?= $row->jam_1_23_L ?></td>

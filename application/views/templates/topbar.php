@@ -123,7 +123,7 @@
                                 <a class="dropdown-item" href="<?= base_url('data/rl38') ?>">RL 3.8 Laboratorium</a>
                                 <a class="dropdown-item" href="<?= base_url('data/rl310') ?>">RL 3.10 Rujukan</a>
                                 <a class="dropdown-item" href="<?= base_url('data/rl41') ?>">RL 4.1 Morbiditas Pasien Rawat Inap</a>
-                                <a class="dropdown-item" href="<?= base_url('data/rl41ralan') ?>">RL 4.1 Morbiditas Pasien Rawat Jalan</a>
+                                <a class="dropdown-item" href="<?= base_url('data/rl41ralan') ?>">RL 5.1 Morbiditas Pasien Rawat Jalan</a>
                             </div>
                         </li>
 
