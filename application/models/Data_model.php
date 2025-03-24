@@ -542,8 +542,8 @@ class Data_model extends CI_Model
                 px.kecamatanpj AS kecamatan,
                 px.kabupatenpj AS kabupaten,
                 px.propinsipj AS provinsi,
-                GROUP_CONCAT(dpx.kd_penyakit SEPARATOR '; ') AS diagnosa,
-                GROUP_CONCAT(ppx.kode SEPARATOR '; ') AS tindakan,
+                dpx.diagnosa,
+                ppx.tindakan,
                 rj.rujuk_ke AS cara_keluar,
                 d.nm_dokter AS DPJP,
                 pj.png_jawab AS Pembayaran,
@@ -557,19 +557,29 @@ class Data_model extends CI_Model
             $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
             $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
             $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-            $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
             $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
             $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
             $this->db->join('kamar_inap ki', 'r.no_rawat = ki.no_rawat', 'left');
             $this->db->join('kamar k', 'ki.kd_kamar = k.kd_kamar', 'left');
-            $this->db->join('bangsal b', 'k.kd_bangsal = b.kd_bangsal', 'left');            $this->db->where('MONTH(r.tgl_registrasi)', $month);
+            $this->db->join('bangsal b', 'k.kd_bangsal = b.kd_bangsal', 'left');
+            
+            // Subquery untuk diagnosa
+            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa 
+                            FROM diagnosa_pasien GROUP BY no_rawat) dpx", 
+                            "r.no_rawat = dpx.no_rawat", "left");
+            
+            // Subquery untuk tindakan
+            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan 
+                            FROM prosedur_pasien GROUP BY no_rawat) ppx", 
+                            "r.no_rawat = ppx.no_rawat", "left");
+
+            $this->db->where('MONTH(r.tgl_registrasi)', $month);
             $this->db->where('YEAR(r.tgl_registrasi)', $year);
             $this->db->where('r.status_lanjut', 'ranap');
-            $this->db->group_by('r.no_rawat');
-        
+
             return $this->db->get()->result_array();
         }
+
 
         public function ranap_view_all()
         {
@@ -588,8 +598,8 @@ class Data_model extends CI_Model
                 px.kecamatanpj AS kecamatan,
                 px.kabupatenpj AS kabupaten,
                 px.propinsipj AS provinsi,
-                GROUP_CONCAT(dpx.kd_penyakit SEPARATOR '; ') AS diagnosa,
-                GROUP_CONCAT(ppx.kode SEPARATOR '; ') AS tindakan,
+                dpx.diagnosa,
+                ppx.tindakan,
                 rj.rujuk_ke AS cara_keluar,
                 d.nm_dokter AS DPJP,
                 pj.png_jawab AS Pembayaran,
@@ -603,20 +613,29 @@ class Data_model extends CI_Model
             $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
             $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
             $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-            $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
             $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
             $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
             $this->db->join('kamar_inap ki', 'r.no_rawat = ki.no_rawat', 'left');
             $this->db->join('kamar k', 'ki.kd_kamar = k.kd_kamar', 'left');
             $this->db->join('bangsal b', 'k.kd_bangsal = b.kd_bangsal', 'left');
+            
+            // Subquery untuk diagnosa
+            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa 
+                            FROM diagnosa_pasien GROUP BY no_rawat) dpx", 
+                            "r.no_rawat = dpx.no_rawat", "left");
+            
+            // Subquery untuk tindakan
+            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan 
+                            FROM prosedur_pasien GROUP BY no_rawat) ppx", 
+                            "r.no_rawat = ppx.no_rawat", "left");
+
             $this->db->where('MONTH(r.tgl_registrasi) = MONTH(CURDATE())');
             $this->db->where('YEAR(r.tgl_registrasi) = YEAR(CURDATE())');
             $this->db->where('r.status_lanjut', 'ranap');
-            $this->db->group_by('r.no_rawat');
 
             return $this->db->get()->result_array();
         }
+
     
         public function option_tahun()
         {
