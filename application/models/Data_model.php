@@ -69,45 +69,54 @@ class Data_model extends CI_Model
     public function getRanap()
     {
         $query = "SELECT
-        r.no_rkm_medis AS NRM,
-                    r.stts_daftar AS Pengunjung,
-                    rm.perujuk AS cara_masuk,
-                    r.tgl_registrasi AS Tanggal_Pendaftaran,
-                    px.nm_pasien AS nama,
-                    px.jk AS jenis_kelamin,
-                    ki.stts_pulang AS stts_pulang,  
-                    ki.tgl_masuk AS Tanggal_masuk,
-                    ki.tgl_keluar AS Tanggal_keluar,
-                    DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                    px.alamat AS Alamat,
-                    px.kecamatanpj AS kecamatan,
-                    px.kabupatenpj AS kabupaten,
-                    px.propinsipj AS provinsi,
-                    GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ';') AS diagnosa,
-                    GROUP_CONCAT(ppx.kode SEPARATOR ';') AS tindakan,
-                    rj.rujuk_ke AS cara_keluar,
-                    d.nm_dokter AS DPJP,
-                    pj.png_jawab AS Pembayaran,
-                    p.nm_poli AS Poli,
-                    r.status_poli AS Kunjungan,
-                    b.nm_bangsal as ruang,
-                    k.kelas as kelas
-                FROM reg_periksa r
-                LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
-                LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
-                LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
-                LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
-                LEFT JOIN diagnosa_pasien dpx ON r.no_rawat = dpx.no_rawat
-                LEFT JOIN prosedur_pasien ppx ON r.no_rawat = ppx.no_rawat
-                LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
-                LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
-                LEFT JOIN kamar_inap ki ON r.no_rawat = ki.no_rawat
-                LEFT JOIN kamar k ON ki.kd_kamar = k.kd_kamar
-                LEFT JOIN bangsal b ON k.kd_bangsal = b.kd_bangsal
-                WHERE MONTH(r.tgl_registrasi) = MONTH(CURDATE())
-                AND YEAR(r.tgl_registrasi) = YEAR(CURDATE())
-                AND r.status_lanjut = 'ranap'
-                GROUP BY r.no_rawat";
+            r.no_rkm_medis AS NRM,
+            r.stts_daftar AS Pengunjung,
+            rm.perujuk AS cara_masuk,
+            r.tgl_registrasi AS Tanggal_Pendaftaran,
+            px.nm_pasien AS nama,
+            px.jk AS jenis_kelamin,
+            ki.stts_pulang AS stts_pulang,  
+            ki.tgl_masuk AS Tanggal_masuk,
+            ki.tgl_keluar AS Tanggal_keluar,
+            DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
+            px.alamat AS Alamat,
+            px.kecamatanpj AS kecamatan,
+            px.kabupatenpj AS kabupaten,
+            px.propinsipj AS provinsi,
+            dpx.diagnosa,
+            ppx.tindakan,
+            rj.rujuk_ke AS cara_keluar,
+            d.nm_dokter AS DPJP,
+            pj.png_jawab AS Pembayaran,
+            p.nm_poli AS Poli,
+            r.status_poli AS Kunjungan,
+            b.nm_bangsal AS ruang,
+            k.kelas AS kelas
+        FROM reg_periksa r
+        LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
+        LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
+        LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
+        LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
+        LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
+        LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
+        LEFT JOIN kamar_inap ki ON r.no_rawat = ki.no_rawat
+        LEFT JOIN kamar k ON ki.kd_kamar = k.kd_kamar
+        LEFT JOIN bangsal b ON k.kd_bangsal = b.kd_bangsal
+        -- Subquery untuk menggabungkan semua diagnosa per no_rawat
+        LEFT JOIN (
+            SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa
+            FROM diagnosa_pasien
+            GROUP BY no_rawat
+        ) dpx ON r.no_rawat = dpx.no_rawat
+        -- Subquery untuk menggabungkan semua tindakan per no_rawat
+        LEFT JOIN (
+            SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan
+            FROM prosedur_pasien
+            GROUP BY no_rawat
+        ) ppx ON r.no_rawat = ppx.no_rawat
+        WHERE r.tgl_registrasi BETWEEN '2025-02-01' AND '2025-02-28'
+        AND r.status_lanjut = 'ranap';
+        ";
 
         return $this->db->query($query)->result_array();
     }
