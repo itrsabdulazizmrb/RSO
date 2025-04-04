@@ -83,7 +83,7 @@
                                                 <td><?= $u['jenis_kelamin']; ?></td>
                                                 <td><?= $u['umur_hari']; ?></td>
                                                 <td><?= $u['Alamat']; ?></td>
-                                                <td class="diagnosa"><?= $u['diagnosa']; ?></td>
+                                                <td class="diagnosa"><?= $u['diagnosa']; ?>, <?= $u['diagnosa_akhir']; ?></td>
                                                 <td><?= $u['tindakan']; ?></td>
                                                 <td><?= $u['stts_pulang']; ?></td>
                                                 <td><?= $u['DPJP']; ?></td>

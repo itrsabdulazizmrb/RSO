@@ -91,7 +91,8 @@ class Data_model extends CI_Model
             p.nm_poli AS Poli,
             r.status_poli AS Kunjungan,
             b.nm_bangsal AS ruang,
-            k.kelas AS kelas
+            k.kelas AS kelas,
+            ki.diagnosa_akhir
         FROM reg_periksa r
         LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
         LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
@@ -114,10 +115,10 @@ class Data_model extends CI_Model
             FROM prosedur_pasien
             GROUP BY no_rawat
         ) ppx ON r.no_rawat = ppx.no_rawat
-        WHERE r.tgl_registrasi BETWEEN '2025-02-01' AND '2025-02-28'
+        WHERE MONTH(r.tgl_registrasi) = MONTH(CURDATE())
+        AND YEAR(r.tgl_registrasi) = YEAR(CURDATE())        
         AND r.status_lanjut = 'ranap';
         ";
-
         return $this->db->query($query)->result_array();
     }
 

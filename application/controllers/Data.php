@@ -55,32 +55,32 @@ class Data extends CI_Controller
     }
 
     public function RL38()
-{
-    $data['title'] = 'Data RL 3.8';
+    {
+        $data['title'] = 'Data RL 3.8';
 
-    $bulan = $this->input->get('bulan') ?: date('m');
-    $tahun = $this->input->get('tahun') ?: date('Y');
-    
-    $data['bulan'] = $bulan;
-    $data['tahun'] = $tahun;
-    
-    $lab_data = $this->Data_model->getRL38($bulan, $tahun);
-    $data['RL38'] = is_array($lab_data) ? $lab_data : []; // Avoid error
+        $bulan = $this->input->get('bulan') ?: date('m');
+        $tahun = $this->input->get('tahun') ?: date('Y');
+        
+        $data['bulan'] = $bulan;
+        $data['tahun'] = $tahun;
+        
+        $lab_data = $this->Data_model->getRL38($bulan, $tahun);
+        $data['RL38'] = is_array($lab_data) ? $lab_data : []; // Avoid error
 
-    $total_tindakan = 0;
-    foreach ($data['RL38'] as $row) {
-        $total_tindakan += $row->total_tindakan;
+        $total_tindakan = 0;
+        foreach ($data['RL38'] as $row) {
+            $total_tindakan += $row->total_tindakan;
+        }
+
+        $jumlah_hari = date('t');
+        $data['total_tindakan'] = $total_tindakan;
+        $data['rata_rata'] = $jumlah_hari > 0 ? $total_tindakan / $jumlah_hari : 0;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('data/rl38', $data);
+        $this->load->view('templates/footer');
     }
-
-    $jumlah_hari = date('t');
-    $data['total_tindakan'] = $total_tindakan;
-    $data['rata_rata'] = $jumlah_hari > 0 ? $total_tindakan / $jumlah_hari : 0;
-
-    $this->load->view('templates/header', $data);
-    $this->load->view('templates/topbar', $data);
-    $this->load->view('data/rl38', $data);
-    $this->load->view('templates/footer');
-}
 
     public function RL310()
     {

@@ -122,7 +122,7 @@ foreach($option_tahun as $data){ // Ambil data tahun dari model yang dikirim dar
                                 <td><?php echo $data_array['jenis_kelamin']; ?></td>
                                 <td><?php echo $data_array['umur_hari']; ?></td>
                                 <td><?php echo $data_array['Alamat']; ?></td>
-                                <td><?php echo $data_array['diagnosa']; ?></td> 
+                                <td><?php echo $data_array['diagnosa_akhir']; ?></td> 
                                 <td><?php echo $data_array['tindakan']; ?></td>
                                 <td><?php echo $data_array['stts_pulang']; ?></td>
                                 <td><?php echo $data_array['DPJP']; ?></td> 
