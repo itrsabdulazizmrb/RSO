@@ -15,10 +15,20 @@ class Data extends CI_Controller
 
     public function Rajal()
     {
-        $data['title'] = 'Data RL 3.5';
-        $data['Rajal'] = $this->Data_model->getRajal();
+        $data['title'] = 'Data Rawat Jalan';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
+
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+
+        if ($start_date && $end_date) {
+            $data['Rajal'] = $this->Data_model->getRajalByDateRange($start_date, $end_date);
+        } else {
+            $data['Rajal'] = $this->Data_model->getRajal();
+        }
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rajal', $data);
         $this->load->view('templates/footer');
@@ -26,11 +36,20 @@ class Data extends CI_Controller
 
     public function Ranap()
     {
-        $data['title'] = 'Data RL 3.5';
+        $data['title'] = 'Data Rawat Inap';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
-        $data['Ranap'] = $this->Data_model->getRanap();
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+
+        if ($start_date && $end_date) {
+            $data['Ranap'] = $this->Data_model->getRanapByDateRange($start_date, $end_date);
+        } else {
+            $data['Ranap'] = $this->Data_model->getRanap();
+        }
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/ranap', $data);
         $this->load->view('templates/footer');
@@ -38,7 +57,8 @@ class Data extends CI_Controller
 
     public function RL35()
     {
-        $data['title'] = 'Data RL 3.5';
+        $data['title'] = 'Data RL 3.5 Kunjungan';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
         $bulan = $this->input->get('bulan') ?: date('m');
         $tahun = $this->input->get('tahun') ?: date('Y');
@@ -49,6 +69,7 @@ class Data extends CI_Controller
         $data['RL35'] = $this->Data_model->getRL35($bulan, $tahun);
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rl35', $data);
         $this->load->view('templates/footer');
@@ -56,7 +77,8 @@ class Data extends CI_Controller
 
     public function RL38()
     {
-        $data['title'] = 'Data RL 3.8';
+        $data['title'] = 'Data RL 3.8 Laboratorium';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
         $bulan = $this->input->get('bulan') ?: date('m');
         $tahun = $this->input->get('tahun') ?: date('Y');
@@ -77,6 +99,7 @@ class Data extends CI_Controller
         $data['rata_rata'] = $jumlah_hari > 0 ? $total_tindakan / $jumlah_hari : 0;
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rl38', $data);
         $this->load->view('templates/footer');
@@ -84,7 +107,8 @@ class Data extends CI_Controller
 
     public function RL310()
     {
-        $data['title'] = 'Data RL 3.10';
+        $data['title'] = 'Data RL 3.10 Rujukan';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
         $bulan = $this->input->get('bulan') ?: date('m');
         $tahun = $this->input->get('tahun') ?: date('Y');
@@ -102,6 +126,7 @@ class Data extends CI_Controller
         $data['rata_rata'] = ($total_rujukan > 0) ? ($total_rujukan / date('t')) : 0;
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rl310', $data);
         $this->load->view('templates/footer');
@@ -109,7 +134,8 @@ class Data extends CI_Controller
 
     public function RL41()
     {
-        $data['title'] = 'Data RL 3.41';
+        $data['title'] = 'Data RL 3.41 Morbiditas Pasien Rawat Jalan';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
         $bulan = $this->input->get('bulan') ?: date('m');
         $tahun = $this->input->get('tahun') ?: date('Y');
@@ -120,6 +146,7 @@ class Data extends CI_Controller
         $data['RL41'] = $this->Data_model->getRL41($bulan, $tahun);
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rl41', $data);
         $this->load->view('templates/footer');
@@ -128,7 +155,8 @@ class Data extends CI_Controller
     public function RL41Ralan()
     {
 
-        $data['title'] = 'Data RL 3.41 Ralan';
+        $data['title'] = 'Data RL 3.51 Morbiditas Pasien Rawat Jalan';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
 
         $bulan = $this->input->get('bulan') ?: date('m');
         $tahun = $this->input->get('tahun') ?: date('Y');
@@ -138,6 +166,7 @@ class Data extends CI_Controller
         $data['RL41'] = $this->Data_model->getRL41Ralan($bulan, $tahun);
 
         $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('data/rl41ralan', $data);
         $this->load->view('templates/footer');

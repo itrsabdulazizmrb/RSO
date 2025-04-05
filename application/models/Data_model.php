@@ -371,279 +371,93 @@ class Data_model extends CI_Model
         return $this->db->query($query, [$bulan, $tahun])->result();
     }
 
-    public function rajal_view_by_date($date1, $date2)
+    public function getRajalByDateRange($start_date, $end_date)
     {
-        $this->db->select('
-            r.no_rkm_medis AS NRM,
-            r.stts_daftar AS Pengunjung,
-            rm.perujuk AS cara_masuk,
-            r.tgl_registrasi AS Tanggal_Pendaftaran,
-            px.nm_pasien AS nama,
-            px.jk AS jenis_kelamin,
-            DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-            px.alamat AS Alamat,
-            px.kecamatanpj AS kecamatan,
-            px.kabupatenpj AS kabupaten,
-            px.propinsipj AS provinsi,
-            GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ";") AS diagnosa,
-            GROUP_CONCAT(ppx.kode SEPARATOR ";") AS tindakan,
-            rj.rujuk_ke AS cara_keluar,
-            d.nm_dokter AS DPJP,
-            pj.png_jawab AS Pembayaran,
-            p.nm_poli AS Poli,
-            r.status_poli AS Kunjungan
-        ');
-        $this->db->from('reg_periksa r');
-        $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-        $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-        $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-        $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-        $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-        $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
-        $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-        $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-        $this->db->where('r.tgl_registrasi >=', $date1);
-        $this->db->where('r.tgl_registrasi <=', $date2);
-        $this->db->where('r.status_lanjut', 'ralan');
-        $this->db->group_by('r.no_rawat');
-    
-        return $this->db->get()->result_array();
+        $query = "SELECT
+                    r.no_rkm_medis AS NRM,
+                    r.stts_daftar AS Pengunjung,
+                    rm.perujuk AS cara_masuk,
+                    r.tgl_registrasi AS Tanggal_Pendaftaran,
+                    px.nm_pasien AS nama,
+                    px.jk AS jenis_kelamin,
+                    DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
+                    px.alamat AS Alamat,
+                    px.kecamatanpj AS kecamatan,
+                    px.kabupatenpj AS kabupaten,
+                    px.propinsipj AS provinsi,
+                    GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ';') AS diagnosa,
+                    GROUP_CONCAT(ppx.kode SEPARATOR ';') AS tindakan,
+                    rj.rujuk_ke AS cara_keluar,
+                    d.nm_dokter AS DPJP,
+                    pj.png_jawab AS Pembayaran,
+                    p.nm_poli AS Poli,
+                    r.status_poli AS Kunjungan
+                FROM reg_periksa r
+                LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
+                LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
+                LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
+                LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
+                LEFT JOIN diagnosa_pasien dpx ON r.no_rawat = dpx.no_rawat
+                LEFT JOIN prosedur_pasien ppx ON r.no_rawat = ppx.no_rawat
+                LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
+                LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
+                WHERE r.tgl_registrasi BETWEEN ? AND ?
+                AND r.status_lanjut = 'ralan'
+                GROUP BY r.no_rawat";
+
+        return $this->db->query($query, [$start_date, $end_date])->result_array();
     }
-        
-        public function rajal_view_by_month($month, $year)
-        {
-            $this->db->select('
-                r.no_rkm_medis AS NRM,
-                r.stts_daftar AS Pengunjung,
-                rm.perujuk AS cara_masuk,
-                r.tgl_registrasi AS Tanggal_Pendaftaran,
-                px.nm_pasien AS nama,
-                px.jk AS jenis_kelamin,
-                DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                px.alamat AS Alamat,
-                px.kecamatanpj AS kecamatan,
-                px.kabupatenpj AS kabupaten,
-                px.propinsipj AS provinsi,
-                GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ";") AS diagnosa,
-                GROUP_CONCAT(ppx.kode SEPARATOR ";") AS tindakan,
-                rj.rujuk_ke AS cara_keluar,
-                d.nm_dokter AS DPJP,
-                pj.png_jawab AS Pembayaran,
-                p.nm_poli AS Poli,
-                r.status_poli AS Kunjungan
-            ');
-            $this->db->from('reg_periksa r');
-            $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-            $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-            $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-            $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-            $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
-            $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-            $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-            $this->db->where('MONTH(r.tgl_registrasi)', $month);
-            $this->db->where('YEAR(r.tgl_registrasi)', $year);
-            $this->db->where('r.status_lanjut', 'ralan');
-            $this->db->group_by('r.no_rawat');
-        
-            return $this->db->get()->result_array();
-        }
 
-        public function rajal_view_by_year($year)
-        {
-            $this->db->select('
-                r.no_rkm_medis AS NRM,
-                r.stts_daftar AS Pengunjung,
-                rm.perujuk AS cara_masuk,
-                r.tgl_registrasi AS Tanggal_Pendaftaran,
-                px.nm_pasien AS nama,
-                px.jk AS jenis_kelamin,
-                DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                px.alamat AS Alamat,
-                px.kecamatanpj AS kecamatan,
-                px.kabupatenpj AS kabupaten,
-                px.propinsipj AS provinsi,
-                GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ";") AS diagnosa,
-                GROUP_CONCAT(ppx.kode SEPARATOR ";") AS tindakan,
-                rj.rujuk_ke AS cara_keluar,
-                d.nm_dokter AS DPJP,
-                pj.png_jawab AS Pembayaran,
-                p.nm_poli AS Poli,
-                r.status_poli AS Kunjungan
-            ');
-            $this->db->from('reg_periksa r');
-            $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-            $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-            $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-            $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-            $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
-            $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-            $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-            $this->db->where('YEAR(r.tgl_registrasi)', $year);
-            $this->db->where('r.status_lanjut', 'ralan');
-            $this->db->group_by('r.no_rawat');
+    public function getRanapByDateRange($start_date, $end_date)
+    {
+        $query = "SELECT
+                    r.no_rkm_medis AS NRM,
+                    r.stts_daftar AS Pengunjung,
+                    rm.perujuk AS cara_masuk,
+                    r.tgl_registrasi AS Tanggal_Pendaftaran,
+                    px.nm_pasien AS nama,
+                    px.jk AS jenis_kelamin,
+                    ki.stts_pulang AS stts_pulang,  
+                    ki.tgl_masuk AS Tanggal_masuk,
+                    ki.tgl_keluar AS Tanggal_keluar,
+                    DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
+                    px.alamat AS Alamat,
+                    px.kecamatanpj AS kecamatan,
+                    px.kabupatenpj AS kabupaten,
+                    px.propinsipj AS provinsi,
+                    dpx.diagnosa,
+                    ppx.tindakan,
+                    rj.rujuk_ke AS cara_keluar,
+                    d.nm_dokter AS DPJP,
+                    pj.png_jawab AS Pembayaran,
+                    p.nm_poli AS Poli,
+                    r.status_poli AS Kunjungan,
+                    b.nm_bangsal AS ruang,
+                    k.kelas AS kelas,
+                    ki.diagnosa_akhir
+                FROM reg_periksa r
+                LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
+                LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
+                LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
+                LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
+                LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
+                LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
+                LEFT JOIN kamar_inap ki ON r.no_rawat = ki.no_rawat
+                LEFT JOIN kamar k ON ki.kd_kamar = k.kd_kamar
+                LEFT JOIN bangsal b ON k.kd_bangsal = b.kd_bangsal
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa
+                    FROM diagnosa_pasien
+                    GROUP BY no_rawat
+                ) dpx ON r.no_rawat = dpx.no_rawat
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan
+                    FROM prosedur_pasien
+                    GROUP BY no_rawat
+                ) ppx ON r.no_rawat = ppx.no_rawat
+                WHERE r.tgl_registrasi BETWEEN ? AND ?
+                AND r.status_lanjut = 'ranap'";
 
-            return $this->db->get()->result_array();
-        }
-       
-        public function rajal_view_all()
-        {
-            $this->db->select('
-                r.no_rkm_medis AS NRM,
-                r.stts_daftar AS Pengunjung,
-                rm.perujuk AS cara_masuk,
-                r.tgl_registrasi AS Tanggal_Pendaftaran,
-                px.nm_pasien AS nama,
-                px.jk AS jenis_kelamin,
-                DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                px.alamat AS Alamat,
-                px.kecamatanpj AS kecamatan,
-                px.kabupatenpj AS kabupaten,
-                px.propinsipj AS provinsi,
-                GROUP_CONCAT(dpx.kd_penyakit SEPARATOR ";") AS diagnosa,
-                GROUP_CONCAT(ppx.kode SEPARATOR ";") AS tindakan,
-                rj.rujuk_ke AS cara_keluar,
-                d.nm_dokter AS DPJP,
-                pj.png_jawab AS Pembayaran,
-                p.nm_poli AS Poli,
-                r.status_poli AS Kunjungan
-            ');
-            $this->db->from('reg_periksa r');
-            $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-            $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-            $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-            $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('diagnosa_pasien dpx', 'r.no_rawat = dpx.no_rawat', 'left');
-            $this->db->join('prosedur_pasien ppx', 'r.no_rawat = ppx.no_rawat', 'left');
-            $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-            $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-            $this->db->where('MONTH(r.tgl_registrasi) = MONTH(CURDATE())');
-            $this->db->where('YEAR(r.tgl_registrasi) = YEAR(CURDATE())');
-            $this->db->where('r.status_lanjut', 'ralan');
-            $this->db->group_by('r.no_rawat');
-
-            return $this->db->get()->result_array();
-        }
-
-        public function ranap_view_by_month($month, $year)
-        {
-            $this->db->select("
-                r.no_rkm_medis AS NRM,
-                r.stts_daftar AS Pengunjung,
-                rm.perujuk AS cara_masuk,
-                r.tgl_registrasi AS Tanggal_Pendaftaran,
-                px.nm_pasien AS nama,
-                px.jk AS jenis_kelamin,
-                ki.stts_pulang AS stts_pulang,  
-                ki.tgl_masuk AS Tanggal_masuk,
-                ki.tgl_keluar AS Tanggal_keluar,
-                DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                px.alamat AS Alamat,
-                px.kecamatanpj AS kecamatan,
-                px.kabupatenpj AS kabupaten,
-                px.propinsipj AS provinsi,
-                dpx.diagnosa,
-                ppx.tindakan,
-                rj.rujuk_ke AS cara_keluar,
-                d.nm_dokter AS DPJP,
-                pj.png_jawab AS Pembayaran,
-                p.nm_poli AS Poli,
-                r.status_poli AS Kunjungan,
-                b.nm_bangsal AS ruang,
-                k.kelas AS kelas
-            ");
-            $this->db->from('reg_periksa r');
-            $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-            $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-            $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-            $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-            $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-            $this->db->join('kamar_inap ki', 'r.no_rawat = ki.no_rawat', 'left');
-            $this->db->join('kamar k', 'ki.kd_kamar = k.kd_kamar', 'left');
-            $this->db->join('bangsal b', 'k.kd_bangsal = b.kd_bangsal', 'left');
-            
-            // Subquery untuk diagnosa
-            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa 
-                            FROM diagnosa_pasien GROUP BY no_rawat) dpx", 
-                            "r.no_rawat = dpx.no_rawat", "left");
-            
-            // Subquery untuk tindakan
-            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan 
-                            FROM prosedur_pasien GROUP BY no_rawat) ppx", 
-                            "r.no_rawat = ppx.no_rawat", "left");
-
-            $this->db->where('MONTH(r.tgl_registrasi)', $month);
-            $this->db->where('YEAR(r.tgl_registrasi)', $year);
-            $this->db->where('r.status_lanjut', 'ranap');
-
-            return $this->db->get()->result_array();
-        }
-
-
-        public function ranap_view_all()
-        {
-            $this->db->select("
-                r.no_rkm_medis AS NRM,
-                r.stts_daftar AS Pengunjung,
-                rm.perujuk AS cara_masuk,
-                r.tgl_registrasi AS Tanggal_Pendaftaran,
-                px.nm_pasien AS nama,
-                px.jk AS jenis_kelamin,
-                ki.stts_pulang AS stts_pulang,  
-                ki.tgl_masuk AS Tanggal_masuk,
-                ki.tgl_keluar AS Tanggal_keluar,
-                DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
-                px.alamat AS Alamat,
-                px.kecamatanpj AS kecamatan,
-                px.kabupatenpj AS kabupaten,
-                px.propinsipj AS provinsi,
-                dpx.diagnosa,
-                ppx.tindakan,
-                rj.rujuk_ke AS cara_keluar,
-                d.nm_dokter AS DPJP,
-                pj.png_jawab AS Pembayaran,
-                p.nm_poli AS Poli,
-                r.status_poli AS Kunjungan,
-                b.nm_bangsal AS ruang,
-                k.kelas AS kelas
-            ");
-            $this->db->from('reg_periksa r');
-            $this->db->join('dokter d', 'r.kd_dokter = d.kd_dokter', 'left');
-            $this->db->join('poliklinik p', 'r.kd_poli = p.kd_poli', 'left');
-            $this->db->join('pasien px', 'r.no_rkm_medis = px.no_rkm_medis', 'left');
-            $this->db->join('penjab pj', 'r.kd_pj = pj.kd_pj', 'left');
-            $this->db->join('rujuk_masuk rm', 'r.no_rawat = rm.no_rawat', 'left');
-            $this->db->join('rujuk rj', 'r.no_rawat = rj.no_rawat', 'left');
-            $this->db->join('kamar_inap ki', 'r.no_rawat = ki.no_rawat', 'left');
-            $this->db->join('kamar k', 'ki.kd_kamar = k.kd_kamar', 'left');
-            $this->db->join('bangsal b', 'k.kd_bangsal = b.kd_bangsal', 'left');
-            
-            // Subquery untuk diagnosa
-            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa 
-                            FROM diagnosa_pasien GROUP BY no_rawat) dpx", 
-                            "r.no_rawat = dpx.no_rawat", "left");
-            
-            // Subquery untuk tindakan
-            $this->db->join("(SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan 
-                            FROM prosedur_pasien GROUP BY no_rawat) ppx", 
-                            "r.no_rawat = ppx.no_rawat", "left");
-
-            $this->db->where('MONTH(r.tgl_registrasi) = MONTH(CURDATE())');
-            $this->db->where('YEAR(r.tgl_registrasi) = YEAR(CURDATE())');
-            $this->db->where('r.status_lanjut', 'ranap');
-
-            return $this->db->get()->result_array();
-        }
-
-    
-        public function option_tahun()
-        {
-            $this->db->select('YEAR(r.tgl_registrasi) AS tahun'); // Use tgl_registrasi from reg_periksa
-            $this->db->from('reg_periksa r'); // Use reg_periksa table
-            $this->db->order_by('YEAR(r.tgl_registrasi)'); // Order by year
-            $this->db->group_by('YEAR(r.tgl_registrasi)'); // Group by year
-            return $this->db->get()->result(); // Return results
-        }
+        return $this->db->query($query, [$start_date, $end_date])->result_array();
+    }
 }
