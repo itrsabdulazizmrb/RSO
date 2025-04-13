@@ -7,6 +7,7 @@ class Auth extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model("Data_model");
     }
 
     public function index()
@@ -30,42 +31,49 @@ class Auth extends CI_Controller
     }
 
     private function _login()
-    {
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
+{
+    $username = $this->input->post('username');
+    $password = $this->input->post('password');
 
-        $user = $this->db->get_where('tbl_user', ['username' => $username])->row_array();
+    $user = $this->db->get_where('tbl_user', ['username' => $username])->row_array();
 
-        // jika usernya ada
-        if ($user) {
-            // jika usernya aktif
-                // cek password
-                if (password_verify($password, $user['password'])) {
-                    $data = [
-                        'username' => $user['username'],   
-                        'id_role' => $user['id_role'],   
-                        'nip' => $user['nip'],         
-                        'unit' => $user['unit'],     
-                    ];
-                    $this->session->set_userdata($data);
-                    if ($user['id_role'] == 0) {
-                        redirect('data/rajal');
-                    } else if ($user['id_role'] == 1) {
-                        redirect('data/rajal');
-                     } else if ($user['id_role'] == 2) {
-                        redirect('data/rajal');
-                    } else {
-                        redirect('data/rajal');
-                    } 
-                } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong password!</div>');
-                    redirect('auth');
-                }
+    // jika usernya ada
+    if ($user) {
+        // jika usernya aktif
+        if (password_verify($password, $user['password'])) {
+            $data = [
+                'username' => $user['username'],   
+                'id_role' => $user['id_role'],   
+                'nip' => $user['nip'],         
+                'unit' => $user['unit'],     
+            ];
+            $this->session->set_userdata($data);
+
+            // Log aktivitas login
+            $this->Data_model->logActivity(
+                $user['username'],
+                'Login',
+                'User logged in successfully'
+            );
+
+            if ($user['id_role'] == 0) {
+                redirect('data/rajal');
+            } else if ($user['id_role'] == 1) {
+                redirect('data/rajal');
+            } else if ($user['id_role'] == 2) {
+                redirect('data/rajal');
+            } else {
+                redirect('data/rajal');
+            } 
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">user_id is not registered!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Wrong password!</div>');
             redirect('auth');
         }
+    } else {
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">User is not registered!</div>');
+        redirect('auth');
     }
+}
 
     public function logout()
     {

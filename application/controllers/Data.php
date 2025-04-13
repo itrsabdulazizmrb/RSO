@@ -13,6 +13,22 @@ class Data extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    
+    public function Dashboard()
+    {
+        $data['title'] = 'Dashboard';
+        $data['username'] = $this->db->get_where('tbl_user', ['username' => $this->session->userdata('username')])->row_array();
+        $data['total_klasifikasi'] = $this->Data_model->getTotalKlasifikasi();
+        $data['total_klasifikasi_ranap'] = $this->Data_model->getTotalKlasifikasiRanap();
+        $data['total_klasifikasi_ralan'] = $this->Data_model->getTotalKlasifikasiRalan();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('data/dashboard', $data);
+        $this->load->view('templates/footer');
+    }
+    
     public function Rajal()
     {
         $data['title'] = 'Data Rawat Jalan';

@@ -27,7 +27,7 @@
 <body class="bg-linear-gradient"> 
 <style>
 body {
-    background: linear-gradient(to bottom, #000000, #737373);
+    background: linear-gradient(to bottom, #121212, #1e1e2f);
     color: #333;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

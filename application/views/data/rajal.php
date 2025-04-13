@@ -52,6 +52,7 @@
                                     <th>Cara Masuk</th>
                                     <th>Nama</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Tanggal Lahir</th>
                                     <th>Umur (hari)</th>
                                     <th>Alamat</th>
                                     <th>Kecamatan</th>
@@ -76,6 +77,7 @@
                                         <td><?= $u['cara_masuk']; ?></td>
                                         <td><?= $u['nama']; ?></td>
                                         <td><?= $u['jenis_kelamin']; ?></td>
+                                        <td><?= $u['tanggal_lahir']; ?></td>
                                         <td><?= $u['umur_hari']; ?></td>
                                         <td><?= $u['Alamat']; ?></td>
                                         <td><?= $u['kecamatan']; ?></td>

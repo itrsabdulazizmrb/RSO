@@ -29,13 +29,14 @@ class Data_model extends CI_Model
     }
 
     public function getRajal()
-{
+    {
     $query = "SELECT
                 r.no_rkm_medis AS NRM,
                 r.stts_daftar AS Pengunjung,
                 rm.perujuk AS cara_masuk,
                 r.tgl_registrasi AS Tanggal_Pendaftaran,
                 px.nm_pasien AS nama,
+                px.tgl_lahir AS tanggal_lahir,
                 px.jk AS jenis_kelamin,
                 DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
                 px.alamat AS Alamat,
@@ -75,6 +76,7 @@ class Data_model extends CI_Model
             r.tgl_registrasi AS Tanggal_Pendaftaran,
             px.nm_pasien AS nama,
             px.jk AS jenis_kelamin,
+            px.tgl_lahir AS tanggal_lahir,
             ki.stts_pulang AS stts_pulang,  
             ki.tgl_masuk AS Tanggal_masuk,
             ki.tgl_keluar AS Tanggal_keluar,
@@ -180,7 +182,6 @@ class Data_model extends CI_Model
             $bulan, $tahun
         ])->result();
     }
-
 
     public function getRL310($bulan, $tahun)
     {
@@ -459,5 +460,25 @@ class Data_model extends CI_Model
                 AND r.status_lanjut = 'ranap'";
 
         return $this->db->query($query, [$start_date, $end_date])->result_array();
+    }
+
+    public function logActivity($username, $action, $details)
+    {
+        $data = [
+            'username' => $username,
+            'action' => $action,
+            'details' => $details,
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+        $this->db->insert('activity_log', $data);
+    }
+    
+    public function getActivityLog($limit = 10)
+    {
+        $this->db->select('*');
+        $this->db->from('activity_log');
+        $this->db->order_by('timestamp', 'DESC');
+        $this->db->limit($limit);
+        return $this->db->get()->result_array();
     }
 }

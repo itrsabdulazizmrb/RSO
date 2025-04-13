@@ -54,6 +54,7 @@
                                     <th>Cara Masuk</th>
                                     <th>Nama</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Tanggal Lahir</th>
                                     <th>Umur (hari)</th>
                                     <th>Alamat</th>
                                     <th>Diagnosa</th>
@@ -78,6 +79,7 @@
                                         <td><?= $u['Poli']; ?></td>
                                         <td><?= $u['nama']; ?></td>
                                         <td><?= $u['jenis_kelamin']; ?></td>
+                                        <td><?= $u['tanggal_lahir']; ?></td>
                                         <td><?= $u['umur_hari']; ?></td>
                                         <td><?= $u['Alamat']; ?></td>
                                         <td class="diagnosa"><?= $u['diagnosa']; ?>, <?= $u['diagnosa_akhir']; ?></td>
