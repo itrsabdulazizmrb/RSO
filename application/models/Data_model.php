@@ -423,6 +423,7 @@ class Data_model extends CI_Model
                     ki.tgl_keluar AS Tanggal_keluar,
                     DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
                     px.alamat AS Alamat,
+                    px.tgl_lahir AS tanggal_lahir,
                     px.kecamatanpj AS kecamatan,
                     px.kabupatenpj AS kabupaten,
                     px.propinsipj AS provinsi,
@@ -456,7 +457,115 @@ class Data_model extends CI_Model
                     FROM prosedur_pasien
                     GROUP BY no_rawat
                 ) ppx ON r.no_rawat = ppx.no_rawat
-                WHERE r.tgl_registrasi BETWEEN ? AND ?
+                WHERE ki.tgl_keluar BETWEEN ? AND ?
+                AND r.status_lanjut = 'ranap'";
+
+        return $this->db->query($query, [$start_date, $end_date])->result_array();
+    }
+
+    public function getRanapByTanggalMasuk($start_date, $end_date)
+    {
+        $query = "SELECT
+                    r.no_rkm_medis AS NRM,
+                    r.stts_daftar AS Pengunjung,
+                    rm.perujuk AS cara_masuk,
+                    r.tgl_registrasi AS Tanggal_Pendaftaran,
+                    px.nm_pasien AS nama,
+                    px.jk AS jenis_kelamin,
+                    ki.stts_pulang AS stts_pulang,  
+                    ki.tgl_masuk AS Tanggal_masuk,
+                    ki.tgl_keluar AS Tanggal_keluar,
+                    DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
+                    px.alamat AS Alamat,
+                    px.tgl_lahir AS tanggal_lahir,
+                    px.kecamatanpj AS kecamatan,
+                    px.kabupatenpj AS kabupaten,
+                    px.propinsipj AS provinsi,
+                    dpx.diagnosa,
+                    ppx.tindakan,
+                    rj.rujuk_ke AS cara_keluar,
+                    d.nm_dokter AS DPJP,
+                    pj.png_jawab AS Pembayaran,
+                    p.nm_poli AS Poli,
+                    r.status_poli AS Kunjungan,
+                    b.nm_bangsal AS ruang,
+                    k.kelas AS kelas,
+                    ki.diagnosa_akhir
+                FROM reg_periksa r
+                LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
+                LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
+                LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
+                LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
+                LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
+                LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
+                LEFT JOIN kamar_inap ki ON r.no_rawat = ki.no_rawat
+                LEFT JOIN kamar k ON ki.kd_kamar = k.kd_kamar
+                LEFT JOIN bangsal b ON k.kd_bangsal = b.kd_bangsal
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa
+                    FROM diagnosa_pasien
+                    GROUP BY no_rawat
+                ) dpx ON r.no_rawat = dpx.no_rawat
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan
+                    FROM prosedur_pasien
+                    GROUP BY no_rawat
+                ) ppx ON r.no_rawat = ppx.no_rawat
+                WHERE ki.tgl_masuk BETWEEN ? AND ?
+                AND r.status_lanjut = 'ranap'";
+
+        return $this->db->query($query, [$start_date, $end_date])->result_array();
+    }
+
+    public function getRanapByTanggalPulang($start_date, $end_date)
+    {
+        $query = "SELECT
+                    r.no_rkm_medis AS NRM,
+                    r.stts_daftar AS Pengunjung,
+                    rm.perujuk AS cara_masuk,
+                    r.tgl_registrasi AS Tanggal_Pendaftaran,
+                    px.nm_pasien AS nama,
+                    px.jk AS jenis_kelamin,
+                    ki.stts_pulang AS stts_pulang,  
+                    ki.tgl_masuk AS Tanggal_masuk,
+                    ki.tgl_keluar AS Tanggal_keluar,
+                    DATEDIFF(CURDATE(), px.tgl_lahir) AS umur_hari,
+                    px.alamat AS Alamat,
+                    px.tgl_lahir AS tanggal_lahir,
+                    px.kecamatanpj AS kecamatan,
+                    px.kabupatenpj AS kabupaten,
+                    px.propinsipj AS provinsi,
+                    dpx.diagnosa,
+                    ppx.tindakan,
+                    rj.rujuk_ke AS cara_keluar,
+                    d.nm_dokter AS DPJP,
+                    pj.png_jawab AS Pembayaran,
+                    p.nm_poli AS Poli,
+                    r.status_poli AS Kunjungan,
+                    b.nm_bangsal AS ruang,
+                    k.kelas AS kelas,
+                    ki.diagnosa_akhir
+                FROM reg_periksa r
+                LEFT JOIN dokter d ON r.kd_dokter = d.kd_dokter
+                LEFT JOIN poliklinik p ON r.kd_poli = p.kd_poli
+                LEFT JOIN pasien px ON r.no_rkm_medis = px.no_rkm_medis
+                LEFT JOIN penjab pj ON r.kd_pj = pj.kd_pj
+                LEFT JOIN rujuk_masuk rm ON r.no_rawat = rm.no_rawat
+                LEFT JOIN rujuk rj ON r.no_rawat = rj.no_rawat
+                LEFT JOIN kamar_inap ki ON r.no_rawat = ki.no_rawat
+                LEFT JOIN kamar k ON ki.kd_kamar = k.kd_kamar
+                LEFT JOIN bangsal b ON k.kd_bangsal = b.kd_bangsal
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kd_penyakit SEPARATOR '; ') AS diagnosa
+                    FROM diagnosa_pasien
+                    GROUP BY no_rawat
+                ) dpx ON r.no_rawat = dpx.no_rawat
+                LEFT JOIN (
+                    SELECT no_rawat, GROUP_CONCAT(DISTINCT kode SEPARATOR '; ') AS tindakan
+                    FROM prosedur_pasien
+                    GROUP BY no_rawat
+                ) ppx ON r.no_rawat = ppx.no_rawat
+                WHERE ki.tgl_keluar BETWEEN ? AND ?
                 AND r.status_lanjut = 'ranap'";
 
         return $this->db->query($query, [$start_date, $end_date])->result_array();

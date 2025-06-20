@@ -52,7 +52,7 @@ class Auth extends CI_Controller
             // Log aktivitas login
             $this->Data_model->logActivity(
                 $user['username'],
-                'Login',
+                'Login RSO',
                 'User logged in successfully'
             );
 

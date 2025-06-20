@@ -34,6 +34,12 @@
                                 <div class="col-md-2">
                                     <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>">
                                 </div>
+                                <div class="col-md-2">
+                                    <select name="filter_type" id="filter_type" class="form-control">
+                                        <option value="masuk" <?= (isset($_GET['filter_type']) && $_GET['filter_type'] == 'masuk') ? 'selected' : '' ?>>Tanggal Masuk</option>
+                                        <option value="pulang" <?= (isset($_GET['filter_type']) && $_GET['filter_type'] == 'pulang') ? 'selected' : '' ?>>Tanggal Pulang</option>
+                                    </select>
+                                </div>
                                 <div class="col-md-1">
                                     <button type="submit" class="btn btn-primary">Filter</button>
                                 </div>

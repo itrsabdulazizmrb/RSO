@@ -57,9 +57,14 @@ class Data extends CI_Controller
 
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
+        $filter_type = $this->input->get('filter_type') ?: 'masuk';
 
         if ($start_date && $end_date) {
-            $data['Ranap'] = $this->Data_model->getRanapByDateRange($start_date, $end_date);
+            if ($filter_type == 'pulang') {
+                $data['Ranap'] = $this->Data_model->getRanapByTanggalPulang($start_date, $end_date);
+            } else {
+                $data['Ranap'] = $this->Data_model->getRanapByTanggalMasuk($start_date, $end_date);
+            }
         } else {
             $data['Ranap'] = $this->Data_model->getRanap();
         }
